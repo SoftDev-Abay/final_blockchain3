@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 
-function SignInForm({ user, btnTitle }) {
+function SignInForm({ user, btnTitle, submitData }) {
   const [password, setPassword] = useState(user?.password || "");
   const [email, setEmail] = useState(user?.name || "");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Here you would typically handle the form submission, such as sending data to a server
-    console.log({ profilePhoto, password, name, bio });
+
+    submitData({ email, password });
+
+    console.log({ email, password });
   };
 
   return (

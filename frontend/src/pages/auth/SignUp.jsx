@@ -1,7 +1,10 @@
 import React from "react";
 import SignUpForm from "./SignUpForm";
 import { Link } from "react-router-dom";
+import axiosInstance from "../../api/axios";
+import { useNavigate } from "react-router-dom";
 const SignUp = () => {
+  const navigate = useNavigate();
   const user = {
     id: 1,
     username: "john_doe",
@@ -19,6 +22,19 @@ const SignUp = () => {
     image: userInfo?.image || user?.imageUrl,
   };
 
+  const handleSubmit = async (data) => {
+    try {
+      const response = await axiosInstance.post("/register", data);
+
+      console.log(response.data);
+      alert("User registered successfully");
+
+      navigate("/auth/sign-in");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="bg-dark-1">
       <main className=" mx-auto flex max-w-3xl flex-col justify-start  px-10 py-20">
@@ -27,7 +43,11 @@ const SignUp = () => {
           Complete your profile now to use Network
         </p>
         <section className="mt-9 bg-dark-2 p-10">
-          <SignUpForm user={userData} btnTitle="Sign up" />
+          <SignUpForm
+            user={userData}
+            btnTitle="Sign up"
+            submitData={handleSubmit}
+          />
           <p className="text-sm text-light-2 mt-5 text-right">
             Already have an account?{" "}
             <Link to="/auth/sign-in" className="text-primary-500">

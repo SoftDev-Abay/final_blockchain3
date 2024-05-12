@@ -2,7 +2,7 @@ import axios from "axios";
 // import { eventEmitter } from "../services/eventEmitter";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8000/api",
+  baseURL: "http://localhost:5050",
 });
 
 // axiosInstance.interceptors.response.use(

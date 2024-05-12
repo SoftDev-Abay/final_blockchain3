@@ -3,14 +3,31 @@ import React, { useState } from "react";
 function SignUpForm({ user, btnTitle, submitData }) {
   const [profilePhoto, setProfilePhoto] = useState(user?.image || "");
   const [username, setUsername] = useState(user?.username || "");
-  const [name, setName] = useState(user?.name || "");
   const [bio, setBio] = useState(user?.bio || "");
-
+  const [email, setEmail] = useState(user?.email || "");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const handleSubmit = (event) => {
     event.preventDefault();
     // Here you would typically handle the form submission, such as sending data to a server
-    submitData({ profilePhoto, username, name, bio });
-    console.log({ profilePhoto, username, name, bio });
+
+    // "name": "Nurzhau",
+    // "email": "email@gmail.com",
+    // "password": "password",
+    // "bio": "something about me",
+    // "profilePicture": "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZnJlZXxlbnwwfHwwfHx8MA%3D%3D"
+
+    const data = {
+      name: username,
+      email: email,
+      password: password,
+      bio: bio,
+      profilePicture: profilePhoto,
+    };
+
+    submitData(data);
+
+    console.log(data);
   };
 
   return (
@@ -33,15 +50,7 @@ function SignUpForm({ user, btnTitle, submitData }) {
           }}
         />
       </div>
-      <div className="flex flex-col gap-3">
-        <label className="text-sm font-semibold text-light-2">Name</label>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="account-form_input p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-        />
-      </div>
+
       <div className="flex flex-col gap-3">
         <label className="text-sm font-semibold text-light-2">Username</label>
         <input
@@ -51,6 +60,41 @@ function SignUpForm({ user, btnTitle, submitData }) {
           className=" account-form_input p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
         />
       </div>
+
+      <div className="flex flex-col gap-3">
+        <label className="text-sm font-semibold text-light-2">Email</label>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="account-form_input p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+        />
+      </div>
+
+      <div className="flex flex-col gap-3">
+        <label className="text-sm font-semibold text-light-2">Password</label>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="account-form_input p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+        />
+      </div>
+
+      {/* confirm password */}
+
+      <div className="flex flex-col gap-3">
+        <label className="text-sm font-semibold text-light-2">
+          Confirm Password
+        </label>
+        <input
+          type="password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          className="account-form_input p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+        />
+      </div>
+
       <div className="flex flex-col gap-3">
         <label className="text-sm font-semibold text-light-2">Bio</label>
         <textarea

@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SignInForm from "./SignInForm";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { setCredentials } from "../../features/auth/authSlice";
+import { useDispatch } from "react-redux";
+import { useLoginMutation } from "../../features/auth/authApiSlice";
+
 const SignIn = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [login, { isLoading }] = useLoginMutation();
+
   const user = {
     id: 1,
     username: "john_doe",
@@ -19,7 +28,17 @@ const SignIn = () => {
     image: userInfo?.image || user?.imageUrl,
   };
 
-  const handleSubmit = (data) => {};
+  const handleSubmit = async (data) => {
+    try {
+      const userData = await login(data).unwrap();
+      console.log(userData);
+
+      dispatch(setCredentials({ ...userData, email: data.email }));
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="bg-dark-1 min-h-[100vh]">
@@ -29,7 +48,11 @@ const SignIn = () => {
           Login to your account
         </p>
         <section className="mt-9 bg-dark-2 p-10">
-          <SignInForm user={userData} btnTitle="Sign in" />
+          <SignInForm
+            user={userData}
+            btnTitle="Sign in"
+            submitData={handleSubmit}
+          />
           <p className="text-sm text-light-2 mt-5 text-right">
             Don't have an account?{" "}
             <Link to="/auth/sign-up" className="text-primary-500">
