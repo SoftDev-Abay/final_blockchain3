@@ -1,10 +1,14 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { sidebarLinks } from "../../constants/index";
+import { useDispatch } from "react-redux";
+import { logOut } from "../../features/auth/authSlice";
 
 function LeftSidebar() {
   const location = useLocation();
   const pathname = location.pathname;
+
+  const dispatch = useDispatch();
 
   return (
     <section className="custom-scrollbar leftsidebar">
@@ -26,22 +30,18 @@ function LeftSidebar() {
           );
         })}
       </div>
-      {/* This part is commented out as it refers to authentication specific components not addressed here.
       <div className="mt-10 px-6">
-        <SignedIn>
-          <SignOutButton signOutCallback={() => history.push("/sign-in")}>
-            <div className="flex cursor-pointer gap-4 p-4">
-              <img
-                src="/assets/logout.svg"
-                alt="logout"
-                width={24}
-                height={24}
-              />
-              <p className="text-light-2 max-lg:hidden">Logout</p>
-            </div>
-          </SignOutButton>
-        </SignedIn>
-      </div> */}
+        <button
+          onClick={() => {
+            dispatch(logOut());
+          }}
+        >
+          <div className="flex cursor-pointer gap-4 p-4">
+            <img src="/assets/logout.svg" alt="logout" width={24} height={24} />
+            <p className="text-light-2 max-lg:hidden">Logout</p>
+          </div>
+        </button>
+      </div>
     </section>
   );
 }

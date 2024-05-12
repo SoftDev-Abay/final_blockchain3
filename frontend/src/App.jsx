@@ -3,12 +3,18 @@ import RootLayout from "./pages/RootLayout";
 import Home from "./pages/home/Home";
 import SignUp from "./pages/auth/SignUp";
 import SignIn from "./pages/auth/SignIn";
+import Profile from "./pages/home/Profile";
+import RequireAuth from "./features/auth/RequireAuth";
+
 function App() {
   return (
     <Routes>
       <Route path="/" element={<RootLayout />}>
-        {/* Add routes here */}
-        <Route index element={<Home />} />
+        {/* protected routes */}
+        <Route element={<RequireAuth />}>
+          <Route path="/" element={<Home />} />
+          <Route path="profile" element={<Profile />} />
+        </Route>
       </Route>
       <Route path="/auth">
         <Route path="sign-up" element={<SignUp />} />
