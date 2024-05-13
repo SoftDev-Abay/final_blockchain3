@@ -10,7 +10,7 @@ npm run dev
 
 ### Running backend
 ```
-cd frontend
+cd backend
 npm install
 npm run dev
 ```
