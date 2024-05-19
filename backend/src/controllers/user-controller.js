@@ -19,15 +19,78 @@ class UserController {
         }
     }
 
-    async login (req, res){
+    async login(req, res) {
         try {
             const { email, password } = req.body;
+            const { user, accessToken, refreshToken } = await AuthService.login(email, password);
 
-            const { user, token } = await AuthService.login(email, password);
-            res.json({ message: 'Login successful!', user, token });
+            res.cookie('accessToken', accessToken, { httpOnly: true, secure: true });
+            res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: true });
+
+            res.json({ message: 'Login successful!', user, accessToken: accessToken});
         } catch (err) {
             console.error(err);
             res.status(401).json({ message: 'Invalid email or password' });
+        }
+    }
+
+    async refreshToken(req, res) {
+        try {
+            const { refreshToken } = req.body;
+            if (!refreshToken) {
+                return res.status(401).json({ message: 'Refresh Token is required' });
+            }
+
+            const tokens = await AuthService.refresh(refreshToken);
+            res.json({
+                accessToken: tokens.accessToken,
+                refreshToken: tokens.refreshToken
+            });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ message: 'Failed to refresh token' });
+        }
+    }
+
+    async getUserData(req, res) {
+        try {
+            const user = await User.findById(req.params.id);
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+            const { password, ...userData } = user.toObject();
+            res.json(userData);
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ message: 'Server error' });
+        }
+    }
+
+    async getMyProfile(req, res) {
+        try {
+            const user = await User.findById(req.user.userId).populate('friends');
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+            const { password, ...profileData } = user.toObject();
+            res.json(profileData);
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ message: 'Server error' });
+        }
+    }
+
+    async getMyFriends(req, res) {
+        try {
+            const userId = req.user.userId;
+            const user = await User.findById(userId).populate('friends', 'name email bio profilePicture');
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+            res.json(user.friends);
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ message: 'Server error' });
         }
     }
 }
