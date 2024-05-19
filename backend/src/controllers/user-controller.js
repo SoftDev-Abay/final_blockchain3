@@ -30,6 +30,34 @@ class UserController {
             res.status(401).json({ message: 'Invalid email or password' });
         }
     }
+
+    async getUserData(req, res) {
+        try {
+            const user = await User.findById(req.params.id);
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+            const { password, ...userData } = user.toObject();
+            res.json(userData);
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ message: 'Server error' });
+        }
+    }
+
+    async getMyProfile(req, res) {
+        try {
+            const user = await User.findById(req.user.userId).populate('friends');
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+            const { password, ...profileData } = user.toObject();
+            res.json(profileData);
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ message: 'Server error' });
+        }
+    }
 }
 
 module.exports = new UserController();

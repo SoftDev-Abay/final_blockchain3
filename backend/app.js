@@ -1,10 +1,10 @@
-const dotenv = require('dotenv');
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const router = require('./src/routes');
-const connectDB = require('./src/config/db');
-const bodyParser = require('body-parser');
+const dotenv = require("dotenv");
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const routes = require("./src/routes");
+const connectDB = require("./src/config/db");
+const bodyParser = require("body-parser");
 
 dotenv.config();
 
@@ -18,7 +18,7 @@ app.use(cors({
 app.use(express.json());
 app.use(bodyParser.json());
 
-app.use('/', router);
+app.use("/", routes);
 
 const start = async() => {
     try {
