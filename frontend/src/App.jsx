@@ -5,7 +5,7 @@ import SignUp from "./pages/auth/SignUp";
 import SignIn from "./pages/auth/SignIn";
 import Profile from "./pages/home/Profile";
 import RequireAuth from "./features/auth/RequireAuth";
-
+import Search from "./pages/home/Search";
 function App() {
   return (
     <Routes>
@@ -14,6 +14,7 @@ function App() {
         <Route element={<RequireAuth />}>
           <Route path="/" element={<Home />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="search" element={<Search />} />
         </Route>
       </Route>
       <Route path="/auth">
