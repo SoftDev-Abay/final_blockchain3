@@ -5,31 +5,7 @@ import Searchbar from "../../components/Searchbar";
 import UserCard from "../../components/UserCard";
 import Pagination from "../../components/Pagination";
 import { selectCurrentUser } from "../../features/auth/authSlice";
-
-// Static user data
-const staticUsers = [
-  {
-    id: 1,
-    name: "Alice",
-    email: "alice123",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvCBZNzX3stNo3MlHYc9fnpNpFHS9GRkzKiCiyK4vT8Q&s",
-  },
-  {
-    id: 2,
-    name: "Bob",
-    email: "bob456",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvCBZNzX3stNo3MlHYc9fnpNpFHS9GRkzKiCiyK4vT8Q&s",
-  },
-  {
-    id: 3,
-    name: "Charlie",
-    email: "charlie789",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvCBZNzX3stNo3MlHYc9fnpNpFHS9GRkzKiCiyK4vT8Q&s",
-  },
-];
+import { staticUsers } from "../../assets";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
