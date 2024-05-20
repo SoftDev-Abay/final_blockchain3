@@ -5,6 +5,7 @@ const cors = require("cors");
 const routes = require("../backend/src/routes");
 const connectDB = require("./src/config/db");
 const bodyParser = require("body-parser");
+const { initializeProgram } = require("./src/api/solanaFriendship")
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.use("/", routes);
 const start = async() => {
     try {
         await connectDB();
+        await initializeProgram();
         app.listen(port, () => {
             console.log(`Server is listening on port ${port}`)
         })
