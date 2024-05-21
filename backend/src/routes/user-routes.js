@@ -10,6 +10,7 @@ router.post('/login', userController.login);
 router.post('/refresh-token', userController.refreshToken);
 router.get('/profile/me', verifyToken, userController.getMyProfile);
 router.get('/friends', verifyToken, userController.getMyFriends);
-router.get('/:id', verifyToken, validateObjectId, userController.getUserData); 
+router.get('/search', verifyToken, userController.searchUsers);
+router.get('/:id', verifyToken, userController.getUserData);
 
 module.exports = router;

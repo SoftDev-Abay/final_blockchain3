@@ -93,6 +93,29 @@ class UserController {
             res.status(500).json({ message: 'Server error' });
         }
     }
+
+    async searchUsers(req, res) {
+        try {
+            const { query } = req.query;
+
+            if (!query) {
+                res.status(400).json({ message: 'Search query is required!' });
+            }
+
+            const regex = new RegExp(query, 'i');
+            const users = await User.find({ name: { $regex: regex } }).select('-password -refreshToken');
+
+            if (users.length === 0) {
+                return res.status(404).json({ message: 'No users found' });
+            }
+    
+            res.json(users);
+
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ message: 'Internal Server error' });
+        }
+    }
 }
 
 module.exports = new UserController();
