@@ -26,4 +26,6 @@ const userSchema = new mongoose.Schema({
     friendRequests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 });
 
+userSchema.index({name: 'text'});
+
 module.exports = mongoose.model('User', userSchema);
