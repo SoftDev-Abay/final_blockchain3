@@ -35,10 +35,13 @@ class UserController {
         password
       );
 
-      res.cookie("accessToken", accessToken, { httpOnly: true, secure: true });
+      res.cookie("accessToken", accessToken, {
+        httpOnly: true,
+        // , secure: true
+      });
       res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
-        secure: true,
+        // secure: true,
       });
 
       res.json({
@@ -55,6 +58,8 @@ class UserController {
   async refreshToken(req, res) {
     try {
       const cookies = req.cookies;
+
+      console.log(cookies);
 
       if (!cookies?.refreshToken)
         return res.status(401).json({ message: "Refresh Token is required" });
@@ -119,10 +124,12 @@ class UserController {
 
   async searchUsers(req, res) {
     try {
-      const { query } = req.query;
+      console.log(req.query);
+
+      let { query } = req.query;
 
       if (!query) {
-        res.status(400).json({ message: "Search query is required!" });
+        query = "";
       }
 
       const regex = new RegExp(query, "i");
@@ -133,6 +140,8 @@ class UserController {
       if (users.length === 0) {
         return res.status(404).json({ message: "No users found" });
       }
+
+      console.log(users);
 
       res.json(users);
     } catch (err) {
