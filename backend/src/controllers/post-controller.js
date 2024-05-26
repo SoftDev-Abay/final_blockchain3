@@ -5,9 +5,6 @@ class PostController {
   async createPost(req, res) {
     try {
       const {title, content, image } = req.body;
-      console.log("=========================")
-      console.log(title, content, image)
-      console.log("=========================")
 
       const author = req.user.userId; 
       const newPost = new Post({

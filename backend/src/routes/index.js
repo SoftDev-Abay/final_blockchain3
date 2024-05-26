@@ -9,6 +9,6 @@ const router = express.Router();
 router.use('/', userRoutes);
 router.use('/post', postRoutes)
 router.use('/friendship', friendshipRoutes);
-router.use('/vacancies', vacancyRoutes);
+router.use('/vacancy', vacancyRoutes);
 
 module.exports = router;
