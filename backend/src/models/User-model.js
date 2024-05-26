@@ -22,6 +22,11 @@ const userSchema = new mongoose.Schema({
     bio: {
         type: String
     },
+    walletAddress: {
+        type: String,
+        required: true,
+        unique: true
+    },
     friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
     friendRequests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 });
