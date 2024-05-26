@@ -1,4 +1,3 @@
-import { getAllVacancies } from '../../../../backend/src/services/vacancy-service';
 import { apiSlice } from '../../app/api/appSlice';
 
 export const vacanciesApiSlice = apiSlice.injectEndpoints({

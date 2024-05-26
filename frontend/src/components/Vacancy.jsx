@@ -11,11 +11,9 @@ const Vacancy = () => {
     const { id } = useParams();
 
     return (
-        <div>
-            <h1>Vacancy</h1>
-
-            <p>id: {id}</p>
-        </div>
+        <section>
+            <h1 className="head-text mb-10">Vacancy</h1>
+        </section>
     );
 };
 

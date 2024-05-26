@@ -21,13 +21,11 @@ const Home = () => {
     }
 
     return (
-        <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold text-center mb-6 text-white">
-                Posts Overview
-            </h1>
+        <section>
+            <h1 className="head-text mb-10">Posts Overview</h1>
             {/* main content */}
             {content}
-        </div>
+        </section>
     );
 };
 

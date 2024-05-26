@@ -10,6 +10,10 @@ import PersistLogin from './features/auth/PersistLogin';
 import UserProfile from './pages/home/UserProfile';
 import CreatePost from './pages/home/CreatePost';
 import ViewPost from './components/ViewPost';
+import Notifications from './pages/home/Notifications';
+import Vacancy from './components/Vacancy';
+import Vacancies from './pages/home/Vacancies';
+
 function App() {
     return (
         <Routes>
@@ -24,8 +28,15 @@ function App() {
                             element={<UserProfile />}
                         />
                         <Route path="search" element={<Search />} />
-                        <Route path="create-thread" element={<CreatePost />} />
+                        <Route path="add-post" element={<CreatePost />} />
                         <Route path="posts/:id" element={<ViewPost />} />
+
+                        <Route
+                            path="notifications"
+                            element={<Notifications />}
+                        />
+                        <Route path="vacancies" element={<Vacancies />} />
+                        <Route path="vacancy/:id" element={<Vacancy />} />
                     </Route>
                 </Route>
             </Route>
