@@ -5,7 +5,8 @@ import {
     useApplyToVacancyMutation,
 } from '../features/vacancies/vacanciesApiSlice';
 import PulseLoader from 'react-spinners/PulseLoader';
-
+import { selectCurrentUser } from '../features/auth/authSlice';
+import { useSelector } from 'react-redux';
 const Vacancy = () => {
     const { id } = useParams();
     const { data, isFetching, isSuccess } = useGetVacancyByIdQuery(id);
@@ -13,6 +14,8 @@ const Vacancy = () => {
         applyToVacancy,
         { isLoading: isApplying, isSuccess: isApplySuccess },
     ] = useApplyToVacancyMutation();
+
+    const user = useSelector(selectCurrentUser);
 
     let content;
 
@@ -28,7 +31,7 @@ const Vacancy = () => {
         const { title, information, contactEmail, author } = data;
 
         const alreadyApplied = data.applied.some(
-            (application) => application.userId === author._id
+            (application) => application.userId === user._id
         );
 
         content = (

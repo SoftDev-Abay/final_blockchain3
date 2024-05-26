@@ -1,16 +1,15 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { setToken, logOut } from "../../features/auth/authSlice";
-
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { setToken, logOut } from '../../features/auth/authSlice';
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:5050",
-  credentials: "include",
-  prepareHeaders: (headers, { getState }) => {
-    const token = getState().auth.token;
-    if (token) {
-      headers.set("authorization", `Bearer ${token}`);
-    }
-    return headers;
-  },
+    baseUrl: 'http://localhost:5050',
+    credentials: 'include',
+    prepareHeaders: (headers, { getState }) => {
+        const token = getState().auth.token;
+        if (token) {
+            headers.set('authorization', `Bearer ${token}`);
+        }
+        return headers;
+    },
 });
 
 // const baseQueryWithReauth = async (args, api, extraOptions) => {
@@ -44,25 +43,36 @@ const baseQuery = fetchBaseQuery({
 //   return result;
 // };
 
+const baseQueryWithReauth = async (args, api, extraOptions) => {
+    let result = await baseQuery(args, api, extraOptions);
+
+    // If you want, handle other status codes, too
+    if (result?.error?.status === 401) {
+        logOut();
+    }
+
+    return result;
+};
+
 export const apiSlice = createApi({
-  baseQuery: baseQuery,
-  endpoints: (builder) => ({
-    register: builder.mutation({
-      query: (data) => ({
-        url: "/register",
-        method: "POST",
-        body: data,
-      }),
+    baseQuery: baseQueryWithReauth,
+    endpoints: (builder) => ({
+        register: builder.mutation({
+            query: (data) => ({
+                url: '/register',
+                method: 'POST',
+                body: data,
+            }),
+        }),
+        login: builder.mutation({
+            query: (data) => ({
+                url: '/login',
+                method: 'POST',
+                body: data,
+            }),
+            onfulfilled: (data, { dispatch }) => {
+                dispatch(setCredentials(data));
+            },
+        }),
     }),
-    login: builder.mutation({
-      query: (data) => ({
-        url: "/login",
-        method: "POST",
-        body: data,
-      }),
-      onfulfilled: (data, { dispatch }) => {
-        dispatch(setCredentials(data));
-      },
-    }),
-  }),
 });
