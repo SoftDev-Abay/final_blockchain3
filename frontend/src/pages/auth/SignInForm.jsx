@@ -1,17 +1,41 @@
-import React, { useState } from "react";
-import usePersist from "../../hooks/usePersist";
+import React, { useState, useEffect } from "react";
+import { PublicKey, Connection, clusterApiUrl } from "@solana/web3.js";
 
-function SignInForm({ user, btnTitle, submitData }) {
-  const [password, setPassword] = useState(user?.password || "");
-  const [email, setEmail] = useState(user?.name || "");
-  const [persist, setPersist] = usePersist();
+function SignInForm({ btnTitle, submitData }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [walletAddress, setWalletAddress] = useState("");
+
+  useEffect(() => {
+    const connectWallet = async () => {
+      if (window.solana && window.solana.isPhantom) {
+        try {
+          const response = await window.solana.connect();
+          setWalletAddress(response.publicKey.toString());
+        } catch (error) {
+          console.error("User denied account access", error);
+        }
+      } else {
+        console.error("Phantom wallet is not installed");
+      }
+    };
+
+    connectWallet();
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    // Here you would typically handle the form submission, such as sending data to a server
 
-    submitData({ email, password });
+    const data = {
+      email: email,
+      password: password,
+      walletAddress: walletAddress,
+    };
 
-    console.log({ email, password });
+    submitData(data);
+
+    console.log(data);
   };
 
   return (
@@ -19,35 +43,34 @@ function SignInForm({ user, btnTitle, submitData }) {
       <div className="flex flex-col gap-3">
         <label className="text-sm font-semibold text-light-2">Email</label>
         <input
-          type="text"
+          type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="account-form_input p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
         />
       </div>
+
       <div className="flex flex-col gap-3">
         <label className="text-sm font-semibold text-light-2">Password</label>
         <input
-          type="text"
+          type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className=" account-form_input p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+          className="account-form_input p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
         />
       </div>
 
-      <div className="flex items-center gap-3">
-        <input
-          type="checkbox"
-          checked={persist}
-          onChange={() => setPersist(!persist)}
-          className="rounded border border-gray-300"
-        />
-        <label className="text-sm font-semibold text-light-2">
-          Keep me signed in
-        </label>
-      </div>
-
-      {/* keep me signed in  */}
+      {walletAddress && (
+        <div className="flex flex-col gap-3">
+          <label className="text-sm font-semibold text-light-2">Wallet Address</label>
+          <input
+            type="text"
+            value={walletAddress}
+            readOnly
+            className="account-form_input p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+          />
+        </div>
+      )}
 
       <button
         type="submit"

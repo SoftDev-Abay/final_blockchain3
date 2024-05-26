@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import Searchbar from "../../components/Searchbar";
 import UserCard from "../../components/UserCard";
 import { useSearchUsersQuery } from "../../features/users/usersApiSlice";
-import PulseLoader from "react-spinners/PulseLoader";
 import { useNavigate } from "react-router-dom";
 
 function useQuery() {
