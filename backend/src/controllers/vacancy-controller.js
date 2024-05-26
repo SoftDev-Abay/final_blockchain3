@@ -49,6 +49,20 @@ class VacancyController {
 			res.status(500).json({ message: 'Server error' });
 		}
 	}
+	async applyToVacancy(req, res) {
+		try {
+			const { userId, resume } = req.body;
+			const vacancyId = req.params.id;
+			const vacancy = await VacancyService.applyToVacancy(vacancyId, userId, resume);
+			if (!vacancy) {
+				return res.status(404).json({ message: 'Vacancy not found or update failed' });
+			}
+			res.status(200).json({ message: 'Application successful', vacancy });
+		} catch (err) {
+			console.error(err);
+			res.status(500).json({ message: 'Server error' });
+		}
+	}
 }
 
 module.exports = new VacancyController();
