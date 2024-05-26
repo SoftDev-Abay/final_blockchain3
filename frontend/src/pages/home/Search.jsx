@@ -4,6 +4,7 @@ import Searchbar from "../../components/Searchbar";
 import UserCard from "../../components/UserCard";
 import { useSearchUsersQuery } from "../../features/users/usersApiSlice";
 import PulseLoader from "react-spinners/PulseLoader";
+import { useNavigate } from "react-router-dom";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -13,6 +14,7 @@ function Search() {
   const [result, setResult] = useState([]);
   const query = useQuery();
 
+  const navigate = useNavigate();
   const searchString = query.get("q") || "";
 
   const { data, error, isSuccess, isLoading } =
@@ -23,6 +25,13 @@ function Search() {
       setResult(data);
     }
   }, [searchString]);
+
+  console.log("result", result);
+  console.log("data", data);
+
+  const onViewProfile = (id) => {
+    navigate(`/profile/${id}`);
+  };
   return (
     <section>
       <h1 className="head-text mb-10">Search</h1>
@@ -35,22 +44,25 @@ function Search() {
             <PulseLoader color={"#FFF"} />
           </div>
         ) : error ? (
-          <p className="no-result">Error</p>
-        ) : result.length === 0 ? (
+          <p className="no-result">{error.message}</p>
+        ) : isSuccess && result.length === 0 ? (
           <p className="no-result">No Result</p>
         ) : (
-          <>
-            {result.users.map((person) => (
-              <UserCard
-                key={person.id}
-                id={person.id}
-                name={person.name}
-                email={person.email}
-                imgUrl={person.image}
-                isFriend={false}
-              />
-            ))}
-          </>
+          isSuccess && (
+            <>
+              {result.map((person) => (
+                <UserCard
+                  key={person.id}
+                  id={person.id}
+                  name={person.name}
+                  email={person.email}
+                  imgUrl={person.profilePicture}
+                  isFriend={false}
+                  onView={() => onViewProfile(person._id)}
+                />
+              ))}
+            </>
+          )
         )}
       </div>
     </section>

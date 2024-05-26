@@ -7,6 +7,7 @@ import Profile from "./pages/home/Profile";
 import RequireAuth from "./features/auth/RequireAuth";
 import Search from "./pages/home/Search";
 import PersistLogin from "./features/auth/PersistLogin";
+import UserProfile from "./pages/home/UserProfile";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route element={<RequireAuth />}>
             <Route path="/" element={<Home />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="profile/:id" element={<UserProfile />} />
             <Route path="search" element={<Search />} />
           </Route>
         </Route>
