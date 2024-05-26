@@ -1,54 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
 import Searchbar from "../../components/Searchbar";
 import UserCard from "../../components/UserCard";
-import Pagination from "../../components/Pagination";
-import { selectCurrentUser } from "../../features/auth/authSlice";
-import { staticUsers } from "../../assets";
+import { useSearchUsersQuery } from "../../features/users/usersApiSlice";
+import PulseLoader from "react-spinners/PulseLoader";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
 function Search() {
-  const [result, setResult] = useState({ users: [], isNext: false });
-  const user = useSelector(selectCurrentUser);
+  const [result, setResult] = useState([]);
   const query = useQuery();
 
-  const searchString = query.get("q");
-  const pageNumber = query.get("page") ? parseInt(query.get("page"), 10) : 1;
+  const searchString = query.get("q") || "";
+
+  const { data, error, isSuccess, isLoading } =
+    useSearchUsersQuery(searchString);
 
   useEffect(() => {
-    // Simulating a fetch with static data
-    const filteredUsers = staticUsers.filter(
-      (user) =>
-        !searchString ||
-        user.name.toLowerCase().includes(searchString.toLowerCase())
-    );
-
-    setResult({
-      users: filteredUsers,
-      isNext: false, // Static example, no pagination
-    });
-
-    // Uncomment when backend is ready
-    /*
-    async function getUsers() {
-      const result = await fetchUsers({
-        userId: user.id,
-        searchString,
-        pageNumber,
-        pageSize: 25,
-      });
-
-      setResult(result);
+    if (isSuccess) {
+      setResult(data);
     }
-
-    getUsers();
-    */
-  }, [user.id, searchString, pageNumber]);
-
+  }, [searchString]);
   return (
     <section>
       <h1 className="head-text mb-10">Search</h1>
@@ -56,7 +30,13 @@ function Search() {
       <Searchbar routeType="search" />
 
       <div className="mt-14 flex flex-col gap-9">
-        {result.users.length === 0 ? (
+        {isLoading ? (
+          <div className="flex justify-center">
+            <PulseLoader color={"#FFF"} />
+          </div>
+        ) : error ? (
+          <p className="no-result">Error</p>
+        ) : result.length === 0 ? (
           <p className="no-result">No Result</p>
         ) : (
           <>
@@ -73,12 +53,6 @@ function Search() {
           </>
         )}
       </div>
-
-      <Pagination
-        path="search"
-        pageNumber={pageNumber}
-        isNext={result.isNext}
-      />
     </section>
   );
 }

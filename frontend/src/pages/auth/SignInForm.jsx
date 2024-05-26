@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import usePersist from "../../hooks/usePersist";
 
 function SignInForm({ user, btnTitle, submitData }) {
   const [password, setPassword] = useState(user?.password || "");
   const [email, setEmail] = useState(user?.name || "");
+  const [persist, setPersist] = usePersist();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -32,6 +34,20 @@ function SignInForm({ user, btnTitle, submitData }) {
           className=" account-form_input p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
         />
       </div>
+
+      <div className="flex items-center gap-3">
+        <input
+          type="checkbox"
+          checked={persist}
+          onChange={() => setPersist(!persist)}
+          className="rounded border border-gray-300"
+        />
+        <label className="text-sm font-semibold text-light-2">
+          Keep me signed in
+        </label>
+      </div>
+
+      {/* keep me signed in  */}
 
       <button
         type="submit"
