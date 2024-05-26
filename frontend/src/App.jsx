@@ -13,7 +13,7 @@ import ViewPost from './components/ViewPost';
 import Notifications from './pages/home/Notifications';
 import Vacancy from './components/Vacancy';
 import Vacancies from './pages/home/Vacancies';
-
+import CreateVacancy from './pages/home/CreateVacancy';
 function App() {
     return (
         <Routes>
@@ -37,6 +37,7 @@ function App() {
                         />
                         <Route path="vacancies" element={<Vacancies />} />
                         <Route path="vacancy/:id" element={<Vacancy />} />
+                        <Route path="add-vacancy" element={<CreateVacancy />} />
                     </Route>
                 </Route>
             </Route>

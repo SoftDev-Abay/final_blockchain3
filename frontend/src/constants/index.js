@@ -25,6 +25,11 @@ export const sidebarLinks = [
         label: 'Vacancies',
     },
     {
+        imgURL: '/assets/create.svg',
+        route: '/add-vacancy',
+        label: 'Create Vacancy',
+    },
+    {
         imgURL: '/assets/user.svg',
         route: '/profile',
         label: 'Profile',
