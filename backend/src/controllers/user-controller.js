@@ -144,9 +144,7 @@ class UserController {
 			let { query } = req.query;
 
 			if (!query) {
-				return res
-					.status(400)
-					.json({ message: 'Search query is required!' });
+				query = '';
 			}
 
 			const regex = new RegExp(query, 'i');
