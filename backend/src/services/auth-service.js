@@ -17,6 +17,7 @@ class AuthService {
 
 		const passwordMatch = await comparePassword(password, user.password);
 		if (!passwordMatch) {
+			console.log("password")
 			throw new Error('Invalid email or password');
 		}
 
@@ -34,7 +35,7 @@ class AuthService {
 		user.refreshToken = refreshToken;
 		await user.save();
 
-		return { accessToken, refreshToken, user };
+		return {user, accessToken, refreshToken };
 	}
 
 	async refresh(token) {
