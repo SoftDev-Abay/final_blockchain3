@@ -9,7 +9,7 @@ import Search from './pages/home/Search';
 import PersistLogin from './features/auth/PersistLogin';
 import UserProfile from './pages/home/UserProfile';
 import CreatePost from './pages/home/CreatePost';
-
+import ViewPost from './components/ViewPost';
 function App() {
     return (
         <Routes>
@@ -25,6 +25,7 @@ function App() {
                         />
                         <Route path="search" element={<Search />} />
                         <Route path="create-thread" element={<CreatePost />} />
+                        <Route path="posts/:id" element={<ViewPost />} />
                     </Route>
                 </Route>
             </Route>
