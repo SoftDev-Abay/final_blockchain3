@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import SignInForm from "./SignInForm";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -11,29 +11,12 @@ const SignIn = () => {
   const navigate = useNavigate();
   const [login, { isLoading }] = useLoginMutation();
 
-  const user = {
-    id: 1,
-    username: "john_doe",
-    imageUrl: "",
-  };
-
-  const userInfo = {};
-
-  const userData = {
-    id: user?.id,
-    objectId: userInfo?._id,
-    username: userInfo?.username || user?.username,
-    name: userInfo?.name || user?.firstname || "",
-    bio: userInfo?.bio || "",
-    image: userInfo?.image || user?.imageUrl,
-  };
-
   const handleSubmit = async (data) => {
     try {
       const userData = await login(data).unwrap();
       console.log(userData);
 
-      dispatch(setCredentials({ ...userData, email: data.email }));
+      dispatch(setCredentials({ ...userData, email: data.email, walletAddress: data.walletAddress }));
       navigate("/");
     } catch (error) {
       console.error(error);
@@ -49,7 +32,6 @@ const SignIn = () => {
         </p>
         <section className="mt-9 bg-dark-2 p-10">
           <SignInForm
-            user={userData}
             btnTitle="Sign in"
             submitData={handleSubmit}
           />
