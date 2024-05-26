@@ -6,10 +6,11 @@ const router = express.Router();
 
 router.use(verifyToken);
 
-router.get('/', vacancyController.getAllVacancies);
-router.post('/', vacancyController.addVacancy);
+router.get('/all', vacancyController.getAllVacancies);
+router.post('/create', vacancyController.addVacancy);
 router.put('/:id', vacancyController.applyToVacancy);
-router.put('/:id', vacancyController.updateVacancy);
-router.delete('/:id', vacancyController.removeVacancy);
+router.get('/:id', vacancyController.getVacancyById)
+// router.put('/:id', vacancyController.updateVacancy);
+router.delete('/:id', vacancyController.deleteVacancy);
 
 module.exports = router;
