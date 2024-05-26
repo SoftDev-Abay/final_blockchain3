@@ -8,6 +8,7 @@ router.use(verifyToken);
 
 router.get('/', vacancyController.getAllVacancies);
 router.post('/', vacancyController.addVacancy);
+router.put('/:id', vacancyController.applyToVacancy);
 router.put('/:id', vacancyController.updateVacancy);
 router.delete('/:id', vacancyController.removeVacancy);
 

@@ -5,8 +5,7 @@ const validateObjectId = require("../middlewares/validateObjectId");
 
 const router = express.Router();
 
-// Route to create a new post
-router.get("/all", verifyToken, postController.getAllPosts)
+router.get("/all", postController.getAllPosts)
 router.post("/create", verifyToken, postController.createPost);
 router.get("/view/:id", verifyToken, validateObjectId, postController.getPostById);
 
