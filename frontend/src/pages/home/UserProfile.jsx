@@ -32,11 +32,12 @@ function UserProfile() {
         },
     ] = useSendFriendRequestMutation();
 
-    const handleButtonSubmit = () =>
+    const handleButtonSubmit = () => {
         sendFriendRequest({
-            intitiator: user?.walletAddress,
+            initiator: user?.walletAddress,
             receiver: userFromApi?.walletAddress,
         });
+    };
 
     useEffect(() => {
         if (isSendSuccess) {
