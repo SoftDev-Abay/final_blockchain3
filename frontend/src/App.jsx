@@ -8,6 +8,7 @@ import RequireAuth from './features/auth/RequireAuth';
 import Search from './pages/home/Search';
 import PersistLogin from './features/auth/PersistLogin';
 import UserProfile from './pages/home/UserProfile';
+import CreatePost from './pages/home/CreatePost';
 
 function App() {
     return (
@@ -23,6 +24,7 @@ function App() {
                             element={<UserProfile />}
                         />
                         <Route path="search" element={<Search />} />
+                        <Route path="create-thread" element={<CreatePost />} />
                     </Route>
                 </Route>
             </Route>
