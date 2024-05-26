@@ -26,7 +26,7 @@ function Search() {
     console.log('data', data);
 
     const onViewProfile = (id) => {
-        navigate(`/profile/${id}`);
+        navigate(`/user-profile/${id}`);
     };
     return (
         <section>
