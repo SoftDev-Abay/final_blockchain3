@@ -7,7 +7,7 @@ import {
 import { useParams } from 'react-router-dom';
 import { useGetUserQuery } from '../../features/users/usersApiSlice';
 import { useSendFriendRequestMutation } from '../../features/friends/friendsApiSlice';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 function UserProfile() {
     const userId = useParams().id;
 
@@ -15,7 +15,9 @@ function UserProfile() {
 
     const { data: userFromApi } = useGetUserQuery(userId);
 
-    const isFriend = user?.friends.includes(userFromApi?._id);
+    const [isFriend, setIsFriend] = useState(
+        user?.friends.includes(userFromApi?._id)
+    );
 
     console.log('userFromApi', userFromApi);
     console.log('user', user);
@@ -32,13 +34,14 @@ function UserProfile() {
 
     const handleButtonSubmit = () =>
         sendFriendRequest({
-            request: userFromApi?._id,
-            receiver: user?._id,
+            intitiator: user?.walletAddress,
+            receiver: userFromApi?.walletAddress,
         });
 
     useEffect(() => {
         if (isSendSuccess) {
             alert('Friend request sent successfully');
+            setIsFriend(true);
         }
     }, [isSendSuccess, isSendError]);
 
