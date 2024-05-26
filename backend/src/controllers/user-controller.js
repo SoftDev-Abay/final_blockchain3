@@ -38,14 +38,6 @@ class UserController {
         }
     }
 
-	async login(req, res) {
-		try {
-			const { email, password } = req.body;
-      console.log(email, password)
-			const { user, accessToken, refreshToken } = await AuthService.login(
-				email,
-				password
-			);
     async login(req, res) {
         try {
             const { email, password } = req.body;
