@@ -6,15 +6,21 @@ import SignIn from "./pages/auth/SignIn";
 import Profile from "./pages/home/Profile";
 import RequireAuth from "./features/auth/RequireAuth";
 import Search from "./pages/home/Search";
+import PersistLogin from "./features/auth/PersistLogin";
+import UserProfile from "./pages/home/UserProfile";
+
 function App() {
   return (
     <Routes>
       <Route path="/" element={<RootLayout />}>
         {/* protected routes */}
-        <Route element={<RequireAuth />}>
-          <Route path="/" element={<Home />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="search" element={<Search />} />
+        <Route element={<PersistLogin />}>
+          <Route element={<RequireAuth />}>
+            <Route path="/" element={<Home />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="profile/:id" element={<UserProfile />} />
+            <Route path="search" element={<Search />} />
+          </Route>
         </Route>
       </Route>
       <Route path="/auth">

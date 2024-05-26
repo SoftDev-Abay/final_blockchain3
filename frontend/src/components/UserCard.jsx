@@ -1,4 +1,4 @@
-function UserCard({ accountId, name, email, imgUrl, isFriend }) {
+function UserCard({ accountId, name, email, imgUrl, isFriend, onView }) {
   return (
     <article className="user-card">
       <div className="user-card_avatar">
@@ -17,7 +17,9 @@ function UserCard({ accountId, name, email, imgUrl, isFriend }) {
         </div>
       </div>
 
-      <button className="user-card_btn h-10 px-4 py-2">View</button>
+      <button className="user-card_btn h-10 px-4 py-2" onClick={onView}>
+        View
+      </button>
     </article>
   );
 }
