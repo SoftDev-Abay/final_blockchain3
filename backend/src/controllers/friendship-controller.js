@@ -2,16 +2,18 @@ const solanaFriendship = require('../api/solanaFriendship');
 
 class FriendshipController {
 	async sendFriendRequest(req, res) {
+		console.log(req.body);
 		const { initiator, receiver } = req.body;
 		try {
-			await solanaFriendship.sendFriendRequest(initiator, receiver);
+			await sendFriendRequest(initiator, receiver);
 			res.status(200).json({
 				message: 'Friend request sent successfully via Solana!',
 			});
 		} catch (error) {
-			console.error(error);
+			console.error('Failed to send friend request:', error);
 			res.status(500).json({
 				message: 'Failed to send friend request via Solana',
+				error: error.toString(),
 			});
 		}
 	}

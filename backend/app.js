@@ -23,16 +23,16 @@ app.use(bodyParser.json());
 
 app.use('/', routes);
 
-const start = async () => {
+async function startServer() {
 	try {
 		await connectDB();
 		await initializeProgram();
 		app.listen(port, () => {
-			console.log(`Server is listening on port ${port}`);
+			console.log(`Server listening on port ${port}`);
 		});
-	} catch (e) {
-		console.log(e);
+	} catch (error) {
+		console.error('Failed to start the server:', error);
 	}
-};
+}
 
-start();
+startServer();
