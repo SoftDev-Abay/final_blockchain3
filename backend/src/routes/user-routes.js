@@ -11,6 +11,8 @@ router.get('/refresh-token', userController.refreshToken);
 router.get('/profile/me', verifyToken, userController.getMyProfile);
 router.get('/friends', verifyToken, userController.getMyFriends);
 router.get('/search', verifyToken, userController.searchUsers);
+router.post('/visit/:id', verifyToken, userController.logVisit);
+router.get('/visitors', verifyToken, userController.getVisitors);
 router.get('/:id', verifyToken, validateObjectId, userController.getUserData);
 
 module.exports = router;
