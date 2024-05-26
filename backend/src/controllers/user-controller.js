@@ -91,12 +91,23 @@ class UserController {
 	}
 
 	async getUserData(req, res) {
+		const visitorId = req.user.userId;
+		const profileId = req.params.id;
+
 		try {
-			const user = await User.findById(req.params.id);
-			if (!user) {
+			const profileUser = await User.findById(profileId);
+			if (!profileUser) {
 				return res.status(404).json({ message: 'User not found' });
 			}
-			const { password, ...userData } = user.toObject();
+
+			if (visitorId !== profileId) {
+				profileUser.profileVisits.push({ visitorId: visitorId });
+				await profileUser.save();
+			}
+
+			const { password, refreshToken, ...userData } =
+				profileUser.toObject();
+
 			res.json(userData);
 		} catch (err) {
 			console.error(err);
