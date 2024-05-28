@@ -14,6 +14,8 @@ import Notifications from './pages/home/Notifications';
 import Vacancy from './components/Vacancy';
 import Vacancies from './pages/home/Vacancies';
 import CreateVacancy from './pages/home/CreateVacancy';
+
+
 function App() {
     return (
         <Routes>
