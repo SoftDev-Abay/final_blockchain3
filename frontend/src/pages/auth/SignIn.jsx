@@ -12,9 +12,7 @@ const SignIn = () => {
   const [login, { isLoading }] = useLoginMutation();
 
   const handleSubmit = async (data) => {
-
     try {
-
       const userData = await login(data).unwrap();
       console.log(userData);
 
