@@ -4,49 +4,28 @@ import { selectCurrentUser } from '../../features/auth/authSlice';
 import { useParams } from 'react-router-dom';
 import { useGetUserQuery } from '../../features/users/usersApiSlice';
 import { useEffect, useState } from 'react';
-import { sendFriendRequest } from '../../features/friends/friendsContract'; 
-import { useAnchorWallet, useConnection } from '@solana/wallet-adapter-react';
+import { useBlog } from '../../features/friends/BlogContext';
 import { PublicKey } from '@solana/web3.js';
 
 function UserProfile() {
+
     const userId = useParams().id;
-    console.log(userId)
     const user = useSelector(selectCurrentUser);
     const { data: userFromApi } = useGetUserQuery(userId);
-    console.log("UserFromAPI", userFromApi?.walletAddress)
-    const [isFriend, setIsFriend] = useState(
-        user?.friends.includes(userFromApi?._id)
-    );
+    const [isFriend, setIsFriend] = useState(user?.friends.includes(userFromApi?._id));
 
-    const connection = useConnection();
+    const { sendRequest, friends } = useBlog();
 
-
-    const [anchorWallet, setAnchorWallet] = useState(null);
     useEffect(() => {
-        const connectWallet = async () => {
-            if (window.solana && window.solana.isPhantom) {
-                try {
-                    const response = await window.solana.connect();
-                    setAnchorWallet(response);
-                } catch (error) {
-                    console.error("Error connecting wallet:", error);
-                }
-            } else {
-                console.error("Phantom wallet is not installed");
+        if (userFromApi) {
+            const isUserFriend = friends.some(friend => friend.equals(new PublicKey(userFromApi.walletAddress)));
+            setIsFriend(isUserFriend);
         }
-        };
-
-        connectWallet();
-    }, []);
-
-    console.log("anchorWallet", anchorWallet)
-    console.log("connection", connection)
-
+    }, [userFromApi, friends]);
 
     const handleButtonSubmit = async () => {
         try {
-            await sendFriendRequest(connection, anchorWallet, new PublicKey(userFromApi?.walletAddress));
-            alert('Friend request sent successfully');
+            await sendRequest(new PublicKey(userFromApi.walletAddress));
             setIsFriend(true);
         } catch (error) {
             console.error('Failed to send friend request:', error);
@@ -54,17 +33,16 @@ function UserProfile() {
         }
     };
 
-    // Render the ProfileHeader only when anchorWallet is set
     return (
         <section>
-            {anchorWallet && (
+            {userFromApi && (
                 <ProfileHeader
-                    accountId={userFromApi?.id}
-                    authUserId={userFromApi?.id}
-                    name={userFromApi?.name}
-                    email={userFromApi?.email}
-                    imgUrl={userFromApi?.profilePicture}
-                    bio={userFromApi?.bio}
+                    accountId={userFromApi.id}
+                    authUserId={userFromApi.id}
+                    name={userFromApi.name}
+                    email={userFromApi.email}
+                    imgUrl={userFromApi.profilePicture}
+                    bio={userFromApi.bio}
                     handleButtonSubmit={handleButtonSubmit}
                     isFriend={isFriend}
                     type="follow"

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { PublicKey, Connection, clusterApiUrl } from "@solana/web3.js";
+import React, { useState } from "react";
+import { useAnchorWallet } from "@solana/wallet-adapter-react";
 
 function SignUpForm({ user, btnTitle, submitData }) {
   const [profilePhoto, setProfilePhoto] = useState(user?.image || "");
@@ -8,24 +8,8 @@ function SignUpForm({ user, btnTitle, submitData }) {
   const [email, setEmail] = useState(user?.email || "");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [walletAddress, setWalletAddress] = useState("");
-
-  useEffect(() => {
-    const connectWallet = async () => {
-      if (window.solana && window.solana.isPhantom) {
-        try {
-          const response = await window.solana.connect();
-          setWalletAddress(response.publicKey.toString());
-        } catch (error) {
-          console.error("User denied account access", error);
-        }
-      } else {
-        console.error("Phantom wallet is not installed");
-      }
-    };
-
-    connectWallet();
-  }, []);
+  const wallet = useAnchorWallet();
+  console.log(wallet);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -36,7 +20,7 @@ function SignUpForm({ user, btnTitle, submitData }) {
       password: password,
       bio: bio,
       profilePicture: profilePhoto,
-      walletAddress: walletAddress,
+      walletAddress: wallet?.publicKey,
     };
 
     submitData(data);
@@ -113,12 +97,12 @@ function SignUpForm({ user, btnTitle, submitData }) {
         />
       </div>
 
-      {walletAddress && (
+      {wallet?.publicKey && (
         <div className="flex flex-col gap-3">
           <label className="text-sm font-semibold text-light-2">Wallet Address</label>
           <input
             type="text"
-            value={walletAddress}
+            value={wallet.publicKey}
             readOnly
             className="account-form_input p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
           />

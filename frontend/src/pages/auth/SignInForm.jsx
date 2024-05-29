@@ -1,36 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { PublicKey, Connection, clusterApiUrl } from "@solana/web3.js";
+import React, { useState } from "react";
+import { useAnchorWallet } from "@solana/wallet-adapter-react";
 
 function SignInForm({ btnTitle, submitData }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [walletAddress, setWalletAddress] = useState("");
-
-  useEffect(() => {
-    const connectWallet = async () => {
-      if (window.solana && window.solana.isPhantom) {
-        try {
-          const response = await window.solana.connect();
-          setWalletAddress(response.publicKey.toString());
-        } catch (error) {
-          console.error("User denied account access", error);
-        }
-      } else {
-        console.error("Phantom wallet is not installed");
-      }
-    };
-
-    connectWallet();
-  }, []);
+  const wallet = useAnchorWallet();
+  console.log(wallet);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Here you would typically handle the form submission, such as sending data to a server
-
+    
     const data = {
       email: email,
       password: password,
-      walletAddress: walletAddress,
+      walletAddress: wallet?.publicKey,
     };
 
     submitData(data);
@@ -60,12 +43,12 @@ function SignInForm({ btnTitle, submitData }) {
         />
       </div>
 
-      {walletAddress && (
+      {wallet?.publicKey && (
         <div className="flex flex-col gap-3">
           <label className="text-sm font-semibold text-light-2">Wallet Address</label>
           <input
             type="text"
-            value={walletAddress}
+            value={wallet.publicKey}
             readOnly
             className="account-form_input p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
           />
