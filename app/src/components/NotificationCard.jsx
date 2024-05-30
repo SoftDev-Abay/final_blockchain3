@@ -30,7 +30,7 @@ function NotificationCard({ publicKey, message, userImage, onSubmit }) {
                     onSubmit(publicKey);
                 }}
             >
-                View
+                Accept
             </button>
         </article>
     );
