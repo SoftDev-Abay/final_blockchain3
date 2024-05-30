@@ -13,8 +13,6 @@ import Vacancy from './components/Vacancy';
 import Vacancies from './pages/home/Vacancies';
 import CreateVacancy from './pages/home/CreateVacancy';
 import WalletConect from './pages/home/WalletConect';
-import { FullPost } from './pages/fullPost';
-import { Dashboard } from './pages/dashboard';
 
 export const Router = () => {
     return (
@@ -66,8 +64,6 @@ export const Router = () => {
                     path="/wallet"
                     render={() => <RootLayout children={<WalletConect />} />}
                 />
-                <Route path="/dashboard" exact render={() => <Dashboard />} />
-                <Route path="/read-post/:id" render={() => <FullPost />} />
 
                 {/* Authentication routes */}
                 <Route path="/auth/sign-up" render={() => <SignUp />} />
