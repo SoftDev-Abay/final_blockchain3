@@ -1,0 +1,102 @@
+{
+  "version": "0.1.0",
+  "name": "blog_sol",
+  "constants": [
+    { "name": "USER_SEED", "type": "bytes", "value": "[117, 115, 101, 114]" },
+    { "name": "POST_SEED", "type": "bytes", "value": "[112, 111, 115, 116]" }
+  ],
+  "instructions": [
+    {
+      "name": "initUser",
+      "accounts": [
+        { "name": "userAccount", "isMut": true, "isSigner": false },
+        { "name": "authority", "isMut": true, "isSigner": true },
+        { "name": "systemProgram", "isMut": false, "isSigner": false }
+      ],
+      "args": [
+        { "name": "name", "type": "string" },
+        { "name": "avatar", "type": "string" }
+      ]
+    },
+    {
+      "name": "createPost",
+      "accounts": [
+        { "name": "postAccount", "isMut": true, "isSigner": false },
+        { "name": "userAccount", "isMut": true, "isSigner": false },
+        { "name": "authority", "isMut": true, "isSigner": true },
+        { "name": "systemProgram", "isMut": false, "isSigner": false }
+      ],
+      "args": [
+        { "name": "title", "type": "string" },
+        { "name": "content", "type": "string" },
+        { "name": "image", "type": "string" }
+      ]
+    },
+    {
+      "name": "sendFriendRequest",
+      "accounts": [
+        { "name": "sender", "isMut": true, "isSigner": false },
+        { "name": "receiver", "isMut": true, "isSigner": false },
+        { "name": "authority", "isMut": false, "isSigner": true }
+      ],
+      "args": []
+    },
+    {
+      "name": "acceptFriendRequest",
+      "accounts": [
+        { "name": "sender", "isMut": true, "isSigner": false },
+        { "name": "receiver", "isMut": true, "isSigner": false },
+        { "name": "authority", "isMut": false, "isSigner": true }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "UserAccount",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "name", "type": "string" },
+          { "name": "avatar", "type": "string" },
+          { "name": "bio", "type": "string" },
+          { "name": "authority", "type": "publicKey" },
+          { "name": "friendRequests", "type": { "vec": "publicKey" } },
+          { "name": "friends", "type": { "vec": "publicKey" } },
+          { "name": "lastPostId", "type": "u8" },
+          { "name": "postCount", "type": "u8" }
+        ]
+      }
+    },
+    {
+      "name": "PostAccount",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "id", "type": "u8" },
+          { "name": "title", "type": "string" },
+          { "name": "content", "type": "string" },
+          { "name": "image", "type": "string" },
+          { "name": "user", "type": "publicKey" },
+          { "name": "authority", "type": "publicKey" }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "FriendRequestAlreadySent",
+      "msg": "Friend request already sent"
+    },
+    {
+      "code": 6001,
+      "name": "FriendRequestNotFound",
+      "msg": "Friend request not found"
+    }
+  ],
+
+  "metadata": {
+    "address": "HQVKW48Scm2bZdaKSrq7rzDnxH4Y9dq1qf6nvC36N96f"
+  }
+}
