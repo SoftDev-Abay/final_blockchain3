@@ -92,7 +92,7 @@ export const BlogProvider = ({ children }) => {
         );
 
         await program.methods
-          .initUser(name, avatar)
+          .initUser(name, avatar, bio)
           .accounts({
             userAccount: userPda,
             authority: publicKey,
@@ -174,6 +174,33 @@ export const BlogProvider = ({ children }) => {
     }
   };
 
+  const acceptRequest = async (senderPublickey) => {
+    senderPublickey.to
+    if (program && publicKey) {
+      setTransactionPending(true);
+      try {
+        const [receiverPda] = findProgramAddressSync([utf8.encode('user'), publicKey.toBuffer()], program.programId);
+        
+        const senderPublickey = typeof senderPublickey === 'string' ? new PublicKey(senderPublickey) : senderPublickey;
+  
+        await program.methods
+          .sendFriendRequest()
+          .accounts({
+            sender: senderPublickey,
+            receiver: receiverPda, 
+            authority: publicKey,
+          })
+          .rpc();
+  
+        setTransactionPending(false);
+      } catch (error) {
+        console.error('Error sending friend request:', error);
+        setTransactionPending(false);
+      }
+    }
+  };
+
+
   const getPersonByPublicKey = (publicKey) => {
     return userAccounts.find((user) => user.publicKey.toBase58() === publicKey);
   };
@@ -198,6 +225,7 @@ export const BlogProvider = ({ children }) => {
         sendFriendRequest,
         getPersonByPublicKey,
         getBlogByPublicKey,
+        acceptRequest
       }}
     >
       {children}

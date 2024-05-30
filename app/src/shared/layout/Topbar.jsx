@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { PhantomWalletName } from "@solana/wallet-adapter-wallets";
 import { Button } from "src/components/Button";
 import { useBlog } from "src/context/Blog";
 import { useHistory } from "react-router-dom";
-import { useEffect } from "react";
 
 function Topbar() {
   const history = useHistory();
@@ -25,6 +24,7 @@ function Topbar() {
       setConnecting(false);
     }
   }, [user]);
+
   return (
     <nav className="topbar">
       <Link to="/" className="flex items-center gap-4">
@@ -34,14 +34,14 @@ function Topbar() {
 
       <div className="flex gap-2">
         <div className="flex items-center gap-1">
-          <div className="block ">
+          <div className="block">
             <div className="flex cursor-pointer">
               {connected ? (
                 <div className="flex items-center">
-                  <p className=" font-bold text-sm ml-2 capitalize underlinepink">
+                  <p className="font-bold text-sm ml-2 capitalize underlinepink">
                     Home
                   </p>
-                  <p className=" font-bold text-sm ml-2 capitalize mr-4 underlinepink">
+                  <p className="font-bold text-sm ml-2 capitalize mr-4 underlinepink">
                     Blog
                   </p>
                   <img
@@ -49,7 +49,7 @@ function Topbar() {
                     alt="avatar"
                     className="w-8 h-8 rounded-full bg-gray-200 shadow ring-2 ring-indigo-400 ring-offset-2 ring-opacity-50"
                   />
-                  <p className=" font-bold text-sm ml-2 capitalize">
+                  <p className="font-bold text-sm ml-2 capitalize">
                     {user?.name}
                   </p>
                   {initialized ? (

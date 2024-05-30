@@ -18,20 +18,19 @@ function LeftSidebar() {
             <Link
               to={link.route}
               key={link.label}
-              className={`leftsidebar_link ${isActive ? "bg-primary-500" : ""}`}
+              className={`leftsidebar_link flex items-center ${isActive ? "bg-primary-500 rounded-md px-6 py-3" : ""}`}
+              style={{ position: isActive ? "relative" : "static", top: isActive ? "0" : "auto", left: isActive ? "0" : "auto" }}
             >
-              <img src={link.imgURL} alt={link.label} width={24} height={24} />
+              <img src={link.imgURL} alt={link.label} width={24} height={24} className="mr-2" />
               <p className="text-light-1 max-lg:hidden">{link.label}</p>
             </Link>
           );
         })}
       </div>
       <div className="mt-10 px-6">
-        <button onClick={() => {}}>
-          <div className="flex cursor-pointer gap-4 p-4">
-            <img src="/assets/logout.svg" alt="logout" width={24} height={24} />
-            <p className="text-light-2 max-lg:hidden">Logout</p>
-          </div>
+        <button onClick={() => {}} className="flex cursor-pointer gap-4 p-4">
+          <img src="/assets/logout.svg" alt="logout" width={24} height={24} className="mr-2" />
+          <p className="text-light-2 max-lg:hidden">Logout</p>
         </button>
       </div>
     </section>
