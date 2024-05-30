@@ -14,7 +14,7 @@ import Vacancy from "./components/Vacancy";
 import Vacancies from "./pages/home/Vacancies";
 import CreateVacancy from "./pages/home/CreateVacancy";
 import WalletConect from "./pages/home/WalletConect";
-import { FullPost } from "./pages/fullPost";
+// import { FullPost } from "./pages/fullPost";
 import { Dashboard } from "./pages/dashboard";
 
 export const Router = () => {
