@@ -181,10 +181,15 @@ export const BlogProvider = ({ children }) => {
       try {
         const [receiverPda] = findProgramAddressSync([utf8.encode('user'), publicKey.toBuffer()], program.programId);
         
-        const senderPublickey = typeof senderPublickey === 'string' ? new PublicKey(senderPublickey) : senderPublickey;
-  
+        // const senderPublickey =
+        //   typeof senderPublickey === "string"
+        //     ? new PublicKey(senderPublickey)
+        //     : senderPublickey;
+
+
+        // const senderPublickey = typeof senderPublickey === 'string' ? new PublicKey(senderPublickey) : senderPublickey;
         await program.methods
-          .sendFriendRequest()
+          .acceptFriendRequest()
           .accounts({
             sender: senderPublickey,
             receiver: receiverPda, 
