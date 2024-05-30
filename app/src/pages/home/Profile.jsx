@@ -1,33 +1,61 @@
-import ProfileHeader from "../../shared/ProfileHeader";
-
-//  mock data
-
-const user = {
-  id: "1",
-  name: "John Doe",
-  email: "john.doe.15@gmail.com",
-  profilePicture: "",
-  bio: "I'm a software engineer and a tech enthusiast.",
-};
+import ProfileHeader from '../../shared/ProfileHeader';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useBlog } from 'src/context/Blog';
+import { get } from 'lodash-es';
 
 function Profile() {
-  if (!user) return null;
+    const { getPersonByPublicKey, user } = useBlog();
 
-  console.log(user);
+    if (!user) {
+        return <p>Loading...</p>;
+    }
 
-  return (
-    <section>
-      <ProfileHeader
-        accountId={user?.id}
-        authUserId={user?.id}
-        name={user?.name}
-        email={user?.email}
-        imgUrl={user?.profilePicture}
-        bio={user?.bio}
-        handleButtonSubmit={() => {}}
-        type="profile"
-      />
-    </section>
-  );
+    console.log('user', user);
+
+    const handleButtonSubmit = () => {};
+
+    const friends = user.friends
+        .map((friendKey) => {
+            console.log('friendKey', friendKey.toBase58());
+            return getPersonByPublicKey(friendKey.toBase58());
+        })
+        .filter((friend) => friend !== undefined);
+
+    return (
+        <section>
+            <ProfileHeader
+                authUserId={user?.id}
+                name={user?.name}
+                imgUrl={user?.avatar}
+                bio={user?.bio}
+                handleButtonSubmit={handleButtonSubmit}
+                isSendingFriendRequest={false}
+                isFriend={false}
+                type="profile"
+            />
+
+            <div>
+                <h2 className="head-text">Friends</h2>
+                <div className="grid grid-cols-3 gap-4">
+                    {friends.map((friend, index) => (
+                        <div
+                            key={'friend' + index + friend.account.name}
+                            className="flex flex-col items-center"
+                        >
+                            <img
+                                src={friend.account.avatar}
+                                alt="avatar"
+                                className="w-16 h-16 rounded-full bg-gray-200 shadow ring-2 ring-indigo-400 ring-offset-2 ring-opacity-50"
+                            />
+                            <p className="text-light-1">
+                                {friend.account.name}
+                            </p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
 }
 export default Profile;

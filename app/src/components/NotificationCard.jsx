@@ -1,7 +1,8 @@
 import React from 'react';
-// import { useNavigate } from "react-router-dom";
+
+import { Link } from 'react-router-dom';
+
 function NotificationCard({ publicKey, message, userImage, onSubmit }) {
-    //   const navigate = useNavigate();
     return (
         <article className="user-card">
             <div className="user-card_avatar">
@@ -14,14 +15,16 @@ function NotificationCard({ publicKey, message, userImage, onSubmit }) {
                     />
                 </div>
 
-                <div className="flex-1 text-ellipsis">
-                    <h4 className="text-base-semibold text-light-1">
-                        {message}
-                    </h4>
-                    <p className="text-small-medium text-gray-1">
-                        {new Date().toLocaleString()}
-                    </p>
-                </div>
+                <Link to={`/user-profile/${publicKey}`}>
+                    <div className="flex-1 text-ellipsis">
+                        <h4 className="text-base-semibold text-light-1">
+                            {message}
+                        </h4>
+                        <p className="text-small-medium text-gray-1">
+                            {new Date().toLocaleString()}
+                        </p>
+                    </div>
+                </Link>
             </div>
 
             <button
