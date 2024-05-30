@@ -1,34 +1,34 @@
-import React, { useState, useEffect } from "react";
-import PostList from "../../components/PostList";
+import React, { useState, useEffect } from 'react';
+import PostList from '../../components/PostList';
 // import { useGetAllPostsQuery } from '../../features/posts/postsApiSlice';
-import { useBlog } from "src/context/Blog";
+import { useBlog } from 'src/context/Blog';
 const Home = () => {
-  const { posts } = useBlog();
+    const { posts } = useBlog();
 
-  const transformedPosts = posts.map((post) => {
-    return {
-      ...post.account,
-      publicKey: post.publicKey.toBase58(),
-    };
-  });
+    const transformedPosts = posts.map((post) => {
+        return {
+            ...post.account,
+            publicKey: post.publicKey.toBase58(),
+        };
+    });
 
-  let content;
+    let content;
 
-  if (!posts.length) {
-    content = <p className="text-center">No posts available.</p>;
-  } else {
-    content = <PostList posts={posts} />;
-  }
+    if (!posts.length < 1) {
+        content = <p className="text-center">No posts available.</p>;
+    } else {
+        content = <PostList posts={transformedPosts} />;
+    }
 
-  console.log(posts);
+    console.log(posts);
 
-  return (
-    <section>
-      <h1 className="head-text mb-10">Posts Overview</h1>
-      {/* main content */}
-      {content}
-    </section>
-  );
+    return (
+        <section>
+            <h1 className="head-text mb-10">Posts Overview</h1>
+            {/* main content */}
+            {content}
+        </section>
+    );
 };
 
 export default Home;
