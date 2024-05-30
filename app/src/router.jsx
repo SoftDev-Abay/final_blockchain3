@@ -7,7 +7,7 @@ import Profile from './pages/home/Profile';
 import Search from './pages/home/Search';
 import UserProfile from './pages/home/UserProfile';
 import CreatePost from './pages/home/CreatePost';
-import ViewPost from './components/ViewPost';
+import PostPage from './pages/home/PostPage';
 import Notifications from './pages/home/Notifications';
 import Vacancy from './components/Vacancy';
 import Vacancies from './pages/home/Vacancies';
@@ -42,7 +42,7 @@ export const Router = () => {
                 />
                 <Route
                     path="/posts/:id"
-                    render={() => <RootLayout children={<ViewPost />} />}
+                    render={() => <RootLayout children={<PostPage />} />}
                 />
                 <Route
                     path="/notifications"

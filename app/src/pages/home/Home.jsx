@@ -14,7 +14,7 @@ const Home = () => {
 
     let content;
 
-    if (!posts.length < 1) {
+    if (posts.length < 1) {
         content = <p className="text-center">No posts available.</p>;
     } else {
         content = <PostList posts={transformedPosts} />;

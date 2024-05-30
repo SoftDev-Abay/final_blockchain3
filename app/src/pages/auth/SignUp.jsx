@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { useBlog } from 'src/context/Blog';
 import { useHistory } from 'react-router-dom';
 import { useWallet } from '@solana/wallet-adapter-react';
+import { PhantomWalletName } from '@solana/wallet-adapter-wallets';
+
 const SignUp = () => {
     //   const navigate = useNavigate();
     const [connecting, setConnecting] = useState(false);

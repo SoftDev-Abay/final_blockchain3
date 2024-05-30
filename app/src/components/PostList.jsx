@@ -17,11 +17,9 @@ const PostList = ({ posts }) => {
                         to={`/posts/${post.publicKey}`}
                         className="hover:underline"
                     >
-                        <h3 className="text-lg font-bold">
-                            {post.account.title}
-                        </h3>
+                        <h3 className="text-lg font-bold">{post.title}</h3>
                     </Link>
-                    <p> {post.account.content}</p>
+                    <p> {post.content}</p>
                 </div>
             ))}
         </div>
