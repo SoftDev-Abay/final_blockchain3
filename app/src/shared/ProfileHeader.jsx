@@ -28,10 +28,7 @@ function ProfileHeader({
             </Link>
         ) : // If the type is not profile, then the button should be Follow
         isFriend ? ( // If the user is already a friend, then the button should be Unfollow
-            <div
-                className="flex cursor-pointer gap-3 rounded-lg bg-dark-3 px-4 py-2"
-                onClick={handleButtonSubmit}
-            >
+            <div className="flex  gap-3 rounded-lg bg-dark-3 px-4 py-2">
                 <img
                     src="/assets/user.svg"
                     alt="Friend"

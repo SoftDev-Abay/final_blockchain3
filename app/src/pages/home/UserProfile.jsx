@@ -16,7 +16,11 @@ const user = {
 function UserProfile() {
     const userPublicKey = useParams().publicKey;
 
-    const { getPersonByPublicKey, sendFriendRequest } = useBlog();
+    const {
+        getPersonByPublicKey,
+        sendFriendRequest,
+        user: currentUser,
+    } = useBlog();
 
     const userFromApi = getPersonByPublicKey(userPublicKey);
 
@@ -26,7 +30,10 @@ function UserProfile() {
         objPublicKey: userFromApi.publicKey,
     };
 
-    const [isFriend, setIsFriend] = useState(false);
+    const isFriend =
+        currentUser.friends.filter((friendKey) =>
+            friendKey.equals(transformedUserFromApi.objPublicKey)
+        ).length > 0;
 
     const handleButtonSubmit = () => {
         sendFriendRequest(transformedUserFromApi.objPublicKey);
