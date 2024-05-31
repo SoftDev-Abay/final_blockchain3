@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useBlog } from 'src/context/Blog';
+import { PublicKey, SystemProgram } from '@solana/web3.js';
 const AddUser = () => {
     const { user, getPersonByPublicKey, sendFriendRequest } = useBlog();
     const [error, setError] = useState('');
