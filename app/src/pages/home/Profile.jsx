@@ -36,7 +36,7 @@ function Profile() {
             />
 
             <div>
-                <h2 className="head-text">Friends</h2>
+                <h2 className="text-heading4-medium">Friends</h2>
                 <div className="grid grid-cols-3 gap-4">
                     {friends.map((friend, index) => (
                         <div

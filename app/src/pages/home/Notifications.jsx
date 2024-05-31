@@ -46,7 +46,7 @@ function Notifications() {
 
     return (
         <section>
-            <h1 className="head-text mb-10">Activity</h1>
+            <h1 className="text-heading4-medium mb-10">Activity</h1>
             {content}
         </section>
     );

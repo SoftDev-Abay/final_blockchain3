@@ -24,7 +24,7 @@ const Home = () => {
 
     return (
         <section>
-            <h1 className="head-text mb-10">Posts Overview</h1>
+            <h1 className="text-heading4-medium mb-10">Posts Overview</h1>
             {/* main content */}
             {content}
         </section>

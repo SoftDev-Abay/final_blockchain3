@@ -39,7 +39,7 @@ body::-webkit-scrollbar {
     padding: 100px 6px 10px 6px; /* pt-28 px-6 pb-10 */
 }
 
-.head-text {
+.text-heading4-medium {
     font-weight: bold;
     color: #f8f8f8; /* text-gray-100 */
 }

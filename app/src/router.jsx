@@ -13,6 +13,7 @@ import Vacancy from './components/Vacancy';
 import Vacancies from './pages/home/Vacancies';
 import CreateVacancy from './pages/home/CreateVacancy';
 import WalletConect from './pages/home/WalletConect';
+import AddUser from './pages/home/AddUser';
 
 export const Router = () => {
     return (
@@ -63,6 +64,10 @@ export const Router = () => {
                 <Route
                     path="/wallet"
                     render={() => <RootLayout children={<WalletConect />} />}
+                />
+                <Route
+                    path="/add-user"
+                    render={() => <RootLayout children={<AddUser />} />}
                 />
 
                 {/* Authentication routes */}

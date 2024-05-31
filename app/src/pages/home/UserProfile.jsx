@@ -30,6 +30,11 @@ function UserProfile() {
         objPublicKey: userFromApi.publicKey,
     };
 
+    console.log(
+        'transformedUserFromApiFirst',
+        transformedUserFromApi.publicKey
+    );
+
     const isFriend =
         currentUser.friends.filter((friendKey) =>
             friendKey.equals(transformedUserFromApi.objPublicKey)
@@ -60,7 +65,7 @@ function UserProfile() {
             />
 
             <div>
-                <h2 className="head-text">Friends</h2>
+                <h2 className="text-heading4-medium">Friends</h2>
                 <div className="grid grid-cols-3 gap-4">
                     {friends.map((friend, index) => (
                         <Link to={`/user-profile/${friend.publicKey}`}>

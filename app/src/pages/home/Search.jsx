@@ -37,7 +37,7 @@ function Search() {
 
     return (
         <section>
-            <h1 className="head-text mb-10">Search</h1>
+            <h1 className="text-heading4-medium mb-10">Search</h1>
 
             <Searchbar
                 routeType="search"
