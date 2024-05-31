@@ -45,6 +45,11 @@ function Profile() {
                         >
                             <img
                                 src={friend.account.avatar}
+                                onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src =
+                                        'https://static.vecteezy.com/system/resources/previews/026/434/409/non_2x/default-avatar-profile-icon-social-media-user-photo-vector.jpg';
+                                }}
                                 alt="avatar"
                                 className="w-16 h-16 rounded-full bg-gray-200 shadow ring-2 ring-indigo-400 ring-offset-2 ring-opacity-50"
                             />

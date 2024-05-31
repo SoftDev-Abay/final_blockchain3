@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useBlog } from 'src/context/Blog';
 import { get } from 'lodash-es';
+import { Link } from 'react-router-dom';
 // mock data
 const user = {
     id: '1',
@@ -55,19 +56,26 @@ function UserProfile() {
                 <h2 className="head-text">Friends</h2>
                 <div className="grid grid-cols-3 gap-4">
                     {friends.map((friend, index) => (
-                        <div
-                            key={'friend' + index + friend.account.name}
-                            className="flex flex-col items-center"
-                        >
-                            <img
-                                src={friend.account.avatar}
-                                alt="avatar"
-                                className="w-16 h-16 rounded-full bg-gray-200 shadow ring-2 ring-indigo-400 ring-offset-2 ring-opacity-50"
-                            />
-                            <p className="text-light-1">
-                                {friend.account.name}
-                            </p>
-                        </div>
+                        <Link to={`/user-profile/${friend.publicKey}`}>
+                            <div
+                                key={'friend' + index + friend.account.name}
+                                className="flex flex-col items-center"
+                            >
+                                <img
+                                    src={friend.account.avatar}
+                                    onError={(e) => {
+                                        e.target.onerror = null;
+                                        e.target.src =
+                                            'https://static.vecteezy.com/system/resources/previews/026/434/409/non_2x/default-avatar-profile-icon-social-media-user-photo-vector.jpg';
+                                    }}
+                                    alt="avatar"
+                                    className="w-16 h-16 rounded-full bg-gray-200 shadow ring-2 ring-indigo-400 ring-offset-2 ring-opacity-50"
+                                />
+                                <p className="text-light-1">
+                                    {friend.account.name}
+                                </p>
+                            </div>
+                        </Link>
                     ))}
                 </div>
             </div>

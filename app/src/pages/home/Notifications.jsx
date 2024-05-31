@@ -37,6 +37,7 @@ function Notifications() {
                         userImage={user.account.avatar || 'defaultAvatarPath'}
                         publicKey={user.publicKey}
                         onSubmit={() => acceptRequest(user.publicKey)}
+                        active={true}
                     />
                 ))}
             </div>

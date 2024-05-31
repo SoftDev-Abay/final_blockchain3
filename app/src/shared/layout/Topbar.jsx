@@ -22,16 +22,23 @@ function Topbar() {
                 <div className="flex items-center gap-1">
                     <div className="block">
                         <div className="flex cursor-pointer">
-                            <div className="flex items-center">
-                                <img
-                                    src={user?.avatar}
-                                    alt="avatar"
-                                    className="w-8 h-8 rounded-full bg-gray-200 shadow ring-2 ring-indigo-400 ring-offset-2 ring-opacity-50"
-                                />
-                                <p className="font-bold text-sm ml-2 capitalize">
-                                    {user?.name}
-                                </p>
-                            </div>
+                            <Link to={'/profile'}>
+                                <div className="flex items-center">
+                                    <img
+                                        src={user?.avatar}
+                                        onError={(e) => {
+                                            e.target.onerror = null;
+                                            e.target.src =
+                                                'https://static.vecteezy.com/system/resources/previews/026/434/409/non_2x/default-avatar-profile-icon-social-media-user-photo-vector.jpg';
+                                        }}
+                                        alt="avatar"
+                                        className="w-8 h-8 rounded-full bg-gray-200 shadow ring-2 ring-indigo-400 ring-offset-2 ring-opacity-50"
+                                    />
+                                    <p className="font-bold text-sm ml-2 capitalize">
+                                        {user?.name}
+                                    </p>
+                                </div>
+                            </Link>
                         </div>
                     </div>
                 </div>

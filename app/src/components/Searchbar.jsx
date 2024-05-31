@@ -14,7 +14,7 @@ function Searchbar({ searchString, setSearchString }) {
                 id="text"
                 value={searchString}
                 onChange={(e) => setSearchString(e.target.value)}
-                placeholder={'Search users'}
+                placeholder={'Search by username'}
                 className="no-focus searchbar_input text-white"
             />
         </div>

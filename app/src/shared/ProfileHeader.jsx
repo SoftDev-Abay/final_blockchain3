@@ -65,6 +65,11 @@ function ProfileHeader({
                     <div className="relative h-20 w-20">
                         <img
                             src={imgUrl}
+                            onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src =
+                                    'https://static.vecteezy.com/system/resources/previews/026/434/409/non_2x/default-avatar-profile-icon-social-media-user-photo-vector.jpg';
+                            }}
                             alt="Profile"
                             className="rounded-full object-cover shadow-2xl"
                             style={{ height: '80px', width: '80px' }} // Using inline styles for width and height

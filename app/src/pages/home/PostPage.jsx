@@ -24,7 +24,7 @@ const PostPage = () => {
 
     return (
         <div>
-            <div className="bg-white shadow-lg rounded-lg p-6 my-6 max-w-4xl mx-auto">
+            <div className="bg-white  shadow-lg rounded-lg p-6 my-6 max-w-4xl mx-auto">
                 <h1 className="text-2xl font-bold text-gray-900 mb-2">
                     {title}
                 </h1>
